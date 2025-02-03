@@ -30,7 +30,7 @@ scene.add(galaxy);
 // Ajustar cantidad de puntos según el tamaño de pantalla
 function getDotsAmount() {
     if (window.innerWidth <= 768) {
-        return 1700;  // Reducido de 1000 a 500 para móvil
+        return 2000;  // Reducido de 1000 a 500 para móvil
     } else if (window.innerWidth <= 1024) {
         return 2000; // Cantidad media para tablets
     } else {
