@@ -223,6 +223,10 @@
 				}
 			}
 
+			.content__title {
+				margin-bottom: 2rem;
+			}
+
 			.content__subtitle {
 				text-align: center;
 				width: 100%;
@@ -232,6 +236,7 @@
 				margin: 0;
 				padding: 0 20px;
 				box-sizing: border-box;
+				top: calc(50% + 3rem);
 			}
 
 			.content__inner {
@@ -241,9 +246,14 @@
 				align-items: center;
 				justify-content: center;
 				text-align: center;
+				height: 100vh;
 			}
 
 			@media screen and (max-width: 768px) {
+				.content__title {
+					margin-bottom: 1rem;
+				}
+
 				.content__subtitle {
 					font-size: 1.2em;
 					width: 100%;
@@ -251,11 +261,13 @@
 					left: 0;
 					transform: none;
 					margin-top: 1rem;
+					top: auto;
 				}
 
 				.content__inner {
 					width: 100%;
 					padding: 0 20px;
+					height: auto;
 				}
 			}
 		</style>
