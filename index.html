@@ -222,6 +222,42 @@
 					height: 300px;
 				}
 			}
+
+			.content__subtitle {
+				text-align: center;
+				width: 100%;
+				position: absolute;
+				left: 50%;
+				transform: translateX(-50%);
+				margin: 0;
+				padding: 0 20px;
+				box-sizing: border-box;
+			}
+
+			.content__inner {
+				position: relative;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				text-align: center;
+			}
+
+			@media screen and (max-width: 768px) {
+				.content__subtitle {
+					font-size: 1.2em;
+					width: 100%;
+					position: relative;
+					left: 0;
+					transform: none;
+					margin-top: 1rem;
+				}
+
+				.content__inner {
+					width: 100%;
+					padding: 0 20px;
+				}
+			}
 		</style>
 	</head>
 	<body class="demo-1">
@@ -303,12 +339,12 @@
 					minHeight: 200.00,
 					minWidth: 200.00,
 					scale: 1.00,
-					scaleMobile: 1.00,
+					scaleMobile: 0.3,
 					color: 0x3f51ff,
 					backgroundColor: 0x23153c,
-					points: 11.00,
-					maxDistance: 21.00,
-					spacing: 17.00
+					points: window.innerWidth < 768 ? 9.00 : 11.00,
+					maxDistance: window.innerWidth < 768 ? 17.00 : 21.00,
+					spacing: window.innerWidth < 768 ? 11.00 : 17.00
 				});
 			}
 		</script>
