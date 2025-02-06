@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Experiencia - Nahuel Albornoz</title>
     <link href="https://fonts.googleapis.com/css?family=Barlow:400,500,700|Playfair+Display" rel="stylesheet">
-    <script src="js/three.min.js"></script>
-    <script src="js/TweenMax.min.js"></script>
-    <script src="js/demo1.js"></script>
     <style>
         body {
             margin: 0;
@@ -17,72 +14,6 @@
             font-family: 'Playfair Display', serif;
             min-height: 100vh;
             line-height: 1.6;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        h1, h2 {
-            background: linear-gradient(45deg, #f2f2f2, #ffffff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(255,255,255,0.1);
-        }
-
-        .experience-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            margin: 2rem 0;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            margin-bottom: 1rem;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        li::before {
-            content: "•";
-            color: #3f51ff;
-            position: absolute;
-            left: 0;
-        }
-
-        p, li {
-            color: #e0e0e0;
-            font-family: 'Barlow', sans-serif;
-        }
-
-        strong {
-            color: #f2f2f2;
-        }
-
-        .back-button {
-            position: fixed;
-            top: 2rem;
-            left: 2rem;
-            padding: 0.5rem 1rem;
-            background: rgba(63, 81, 255, 0.2);
-            border: 1px solid rgba(63, 81, 255, 0.4);
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        .back-button:hover {
-            background: rgba(63, 81, 255, 0.4);
         }
 
         .bg-container {
@@ -99,40 +30,327 @@
             width: 100%;
             height: 100%;
         }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem;
+            padding-top: 4rem;
+        }
+
+        h1, h2 {
+            background: linear-gradient(45deg, #f2f2f2, #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255,255,255,0.1);
+        }
+
+        .experience-timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .experience-item {
+            background: rgba(63, 81, 255, 0.1);
+            border: 1px solid rgba(63, 81, 255, 0.3);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .experience-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(63, 81, 255, 0.2);
+        }
+
+        .experience-item h2 {
+            margin-top: 0;
+            color: #3f51ff;
+            font-size: 1.8em;
+        }
+
+        .experience-item h3 {
+            color: #e0e0e0;
+            font-size: 1.2em;
+            margin: 0.5rem 0;
+        }
+
+        .experience-item .period {
+            color: #3f51ff;
+            font-family: 'Barlow', sans-serif;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .responsibilities {
+            list-style-type: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .responsibilities li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #e0e0e0;
+            font-family: 'Barlow', sans-serif;
+        }
+
+        .responsibilities li::before {
+            content: "•";
+            color: #3f51ff;
+            position: absolute;
+            left: 0;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            padding: 0.5rem 1rem;
+            background: rgba(63, 81, 255, 0.2);
+            border: 1px solid rgba(63, 81, 255, 0.4);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            z-index: 100;
+        }
+
+        .back-button:hover {
+            background: rgba(63, 81, 255, 0.4);
+        }
+
+        .profile-summary {
+            background: rgba(63, 81, 255, 0.15);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            font-size: 1.1em;
+            line-height: 1.8;
+            border: 1px solid rgba(63, 81, 255, 0.4);
+        }
+
+        .featured-image-container {
+            width: 300px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .experience-item.with-image {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .experience-content {
+            flex: 1;
+        }
+
+        .featured-image {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border: 1px solid rgba(63, 81, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .featured-image:hover {
+            transform: scale(1.02);
+        }
+
+        .social-media-section {
+            margin-top: 4rem;
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-card {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+            background: rgba(63, 81, 255, 0.1);
+            border: 1px solid rgba(63, 81, 255, 0.3);
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(63, 81, 255, 0.2);
+            background: rgba(63, 81, 255, 0.2);
+        }
+
+        .social-icon {
+            width: 48px;
+            height: 48px;
+            margin-right: 1rem;
+        }
+
+        .social-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .social-content h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.2em;
+        }
+
+        .social-content p {
+            margin: 0;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                padding-top: 5rem;
+            }
+            
+            .experience-item {
+                padding: 1.5rem;
+            }
+
+            .experience-item.with-image {
+                flex-direction: column;
+            }
+
+            .featured-image-container {
+                width: 100%;
+                max-width: 300px;
+                margin: 1rem auto;
+            }
+
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="bg-container" id="bg-container"></div>
     <a href="index.html" class="back-button">← Volver</a>
+    
     <div class="container">
-        <h1>Educación y Experiencia</h1>
-        <img src="images/pic02.jpg" alt="Formación y experiencia" class="experience-image">
-        
-        <h2>Educación</h2>
-        <ul>
-            <li>2022: Lenguaje de programacion PYTHON - Fundación Santísima Trinidad</li>
-            <li>2021: Diplomado en Inteligencia de Datos en la Gestión de Organizaciones - FCE UNCuyo</li>
-            <li>2020-2021: Power BI Desktop - Coursera / UDEMY / DatData</li>
-            <li>2015: Diseño Web Integral</li>
-            <li>2004-2014: Contador Público y Perito Partidor - UNCuyo</li>
-        </ul>
+        <h1>Experiencia Profesional</h1>
 
-        <h2>Experiencia Profesional</h2>
-        <ul>
-            <li>
-                <strong>Dirección General de Escuelas - Mendoza (2017 - Hoy):</strong>
-                Contador General, responsable de la liquidación y análisis contable, además de la gestión de datos contables, de alumnos y de sueldos.
-            </li>
-            <li>
-                <strong>Universidad Nacional de Cuyo (2009 - 2017):</strong>
-                Responsable de área y analista contable, encargado de la elaboración y análisis del presupuesto de la UNCUYO.
-            </li>
-            <li>
-                <strong>Trabajo Independiente (2009 - Hoy):</strong>
-                Asesoramiento y presentaciones tributarias, elaboración de informes contables y presupuestarios.
-            </li>
-        </ul>
+        <div class="profile-summary">
+            Contador Público con más de 15 años de experiencia en el sector público e independiente, 
+            especializado en análisis de datos, visualización y Business Intelligence. Mi enfoque 
+            combina expertise financiero con tecnologías avanzadas para transformar datos en 
+            decisiones estratégicas efectivas.
+        </div>
+
+        <div class="experience-timeline">
+            <div class="experience-item with-image">
+                <div class="experience-content">
+                    <h2>Dirección General de Escuelas - Mendoza</h2>
+                    <div class="period">2016 - Presente</div>
+                    <h3>Asesor y Analista de Datos</h3>
+                    <ul class="responsibilities">
+                        <li>Desarrollo de dashboards interactivos y análisis de datos para la toma de decisiones estratégicas</li>
+                        <li>Gestión y análisis de datos contables, de alumnos y de sueldos a gran escala</li>
+                        <li>Implementación de soluciones de Business Intelligence y automatización de procesos</li>
+                        <li>Desarrollo de modelos predictivos y análisis avanzados para optimización operativa</li>
+                    </ul>
+                    <div class="additional-role">
+                        <div class="period">2017 - 2024</div>
+                        <h3>Contador General</h3>
+                        <ul class="responsibilities">
+                            <li>Gestión y supervisión de procesos contables y financieros</li>
+                            <li>Coordinación de equipos y optimización de procedimientos administrativos</li>
+                            <li>Elaboración de informes y análisis presupuestarios</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="featured-image-container">
+                    <img src="img/experiencia.jpg" 
+                         alt="Participación en eventos institucionales y reconocimientos en mi trayectoria profesional" 
+                         class="featured-image">
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <h2>Universidad Nacional de Cuyo</h2>
+                <div class="period">2009 - 2017</div>
+                <h3>Responsable de Área y Analista Contable</h3>
+                <ul class="responsibilities">
+                    <li>Elaboración y análisis del presupuesto universitario</li>
+                    <li>Organización de imputaciones y coordinación de procesos contables</li>
+                    <li>Desarrollo de informes financieros y análisis presupuestarios</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <h2>Consultoría Independiente</h2>
+                <div class="period">2009 - Presente</div>
+                <h3>Asesor en Business Intelligence y Finanzas</h3>
+                <ul class="responsibilities">
+                    <li>Asesoramiento contable y tributario para empresas y organizaciones</li>
+                    <li>Desarrollo de soluciones de análisis de datos y visualización</li>
+                    <li>Implementación de modelos predictivos y automatizaciones</li>
+                    <li>Elaboración de informes gerenciales y análisis estratégicos</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <h2>Análisis de Datos y Visualizaciones</h2>
+                <div class="period">2020 - Presente</div>
+                <h3>Especialista en Business Intelligence</h3>
+                <ul class="responsibilities">
+                    <li>Desarrollo de modelos predictivos utilizando Machine Learning</li>
+                    <li>Creación de dashboards interactivos en Power BI y Tableau</li>
+                    <li>Implementación de soluciones de automatización con Python</li>
+                    <li>Análisis avanzado de datos para la toma de decisiones</li>
+                </ul>
+            </div>
+        </div>
+
+        <section class="social-media-section">
+            <h2>En los medios y redes</h2>
+            <div class="social-grid">
+                <a href="https://www.instagram.com/p/CyEUXCUOhiM/?igshid=MTc4MmM1YmI2Ng%3D%3D&img_index=3" 
+                   class="social-card" 
+                   target="_blank">
+                    <div class="social-icon">
+                        <img src="instagram-icon.png" alt="Instagram">
+                    </div>
+                    <div class="social-content">
+                        <h3>Instagram</h3>
+                        <p>Imagen destacada en redes sobre mi participación en eventos profesionales.</p>
+                    </div>
+                </a>
+
+                <a href="https://x.com/alfredocornejo/status/1075551552427810816?t=DRwokm0Z2I9SfFJQVBq4nw&s=08" 
+                   class="social-card" 
+                   target="_blank">
+                    <div class="social-icon">
+                        <img src="twitter-icon.png" alt="Twitter">
+                    </div>
+                    <div class="social-content">
+                        <h3>Twitter (X)</h3>
+                        <p>Publicación destacada en la red social sobre mi trayectoria y reconocimiento.</p>
+                    </div>
+                </a>
+            </div>
+        </section>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
     <script>
         window.onload = function() {
             VANTA.NET({
@@ -152,7 +370,5 @@
             });
         }
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
 </body>
 </html> 

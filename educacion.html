@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educación - Nahuel Albornoz</title>
+    <link href="https://fonts.googleapis.com/css?family=Barlow:400,500,700|Playfair+Display" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-container canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem;
+            padding-top: 4rem;
+        }
+
+        h1, h2 {
+            background: linear-gradient(45deg, #f2f2f2, #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255,255,255,0.1);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 1rem 0;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background: rgba(63, 81, 255, 0.3);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        .timeline-item {
+            padding: 5px 40px;
+            position: relative;
+            width: calc(50% - 40px);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-content {
+            padding: 1rem;
+            background: rgba(63, 81, 255, 0.1);
+            border: 1px solid rgba(63, 81, 255, 0.3);
+            border-radius: 10px;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(63, 81, 255, 0.2);
+        }
+
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #3f51ff;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            right: -50px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::after {
+            left: -50px;
+        }
+
+        .timeline-date {
+            color: #3f51ff;
+            font-family: 'Barlow', sans-serif;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            color: #ffffff;
+            font-size: 1.1em;
+            margin: 0.3rem 0;
+        }
+
+        .timeline-institution {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9em;
+            font-style: italic;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            padding: 0.5rem 1rem;
+            background: rgba(63, 81, 255, 0.2);
+            border: 1px solid rgba(63, 81, 255, 0.4);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            z-index: 100;
+        }
+
+        .back-button:hover {
+            background: rgba(63, 81, 255, 0.4);
+        }
+
+        .education-category {
+            margin-bottom: 2rem;
+        }
+
+        @media screen and (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 50px;
+                padding-right: 15px;
+            }
+
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+
+            .timeline-content::after {
+                left: -39px !important;
+            }
+
+            .timeline-content {
+                padding: 0.8rem;
+            }
+
+            .container {
+                padding-top: 5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-container" id="bg-container"></div>
+    <a href="index.html" class="back-button">← Volver</a>
+    
+    <div class="container">
+        <h1>Educación y Formación</h1>
+
+        <div class="education-category">
+            <h2>Educación Formal</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2004 - 2015</div>
+                        <div class="timeline-title">Contador Público y Perito Partidor</div>
+                        <div class="timeline-institution">Universidad Nacional de Cuyo (UNCuyo)</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2000 - 2003</div>
+                        <div class="timeline-title">Educación Polimodal - Economía y Gestión de las Organizaciones</div>
+                        <div class="timeline-institution">Escuela de Comercio 'Martín Zapata' - UNCuyo</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="education-category">
+            <h2>Diplomados y Cursos de Posgrado</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2022</div>
+                        <div class="timeline-title">Diplomado en Inteligencia de Datos en la Gestión de Organizaciones</div>
+                        <div class="timeline-institution">Facultad de Ciencias Económicas (FCE) UNCuyo</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="education-category">
+            <h2>Cursos y Capacitaciones Recientes (2024-2025)</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2025</div>
+                        <div class="timeline-title">Langchain y LLM: Desarrolla Aplicaciones de IA en Python</div>
+                        <div class="timeline-institution">Udemy</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2024</div>
+                        <div class="timeline-title">Curso Completo de Bases de Datos. SQL y MySQL</div>
+                        <div class="timeline-institution">Udemy</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2024</div>
+                        <div class="timeline-title">Excel y Power BI - Análisis y Visualización de Datos</div>
+                        <div class="timeline-institution">Udemy</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2024</div>
+                        <div class="timeline-title">Microsoft Power BI - Curso de Power BI Desktop</div>
+                        <div class="timeline-institution">Udemy</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2024</div>
+                        <div class="timeline-title">Power Query - Transformación de datos en Power BI</div>
+                        <div class="timeline-institution">Udemy</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="education-category">
+            <h2>Cursos y Capacitaciones (2020-2023)</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2023</div>
+                        <div class="timeline-title">Curso de Inglés Aplicado a las Tecnologías (Niveles 1, 2 y 3)</div>
+                        <div class="timeline-institution">Gobierno de Mendoza - Fund. Santísima Trinidad</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2022</div>
+                        <div class="timeline-title">Curso de Programación PYTHON</div>
+                        <div class="timeline-institution">Fundación Santísima Trinidad</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2020</div>
+                        <div class="timeline-title">Programming for Everybody (Getting Started with Python)</div>
+                        <div class="timeline-institution">Universidad de Michigan - Coursera</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2020</div>
+                        <div class="timeline-title">Inteligencia Artificial en Power BI</div>
+                        <div class="timeline-institution">Coursera</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2020</div>
+                        <div class="timeline-title">Curso Completo de Power BI Desktop</div>
+                        <div class="timeline-institution">Coursera</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2020</div>
+                        <div class="timeline-title">Curso de Power BI Desktop</div>
+                        <div class="timeline-institution">Udemy</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="education-category">
+            <h2>Cursos y Capacitaciones (2015)</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2015</div>
+                        <div class="timeline-title">Curso de Diseño Web Integral</div>
+                        <div class="timeline-institution">Bisiesto - E-Commerce & Social Media</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <script>
+        window.onload = function() {
+            VANTA.NET({
+                el: "#bg-container",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 0.5,
+                color: 0x3f51ff,
+                backgroundColor: 0x000000,
+                points: window.innerWidth < 768 ? 8.00 : 11.00,
+                maxDistance: window.innerWidth < 768 ? 12.00 : 21.00,
+                spacing: window.innerWidth < 768 ? 20.00 : 17.00
+            });
+        }
+
+        // Mejora en la animación de la línea de tiempo
+        document.addEventListener('DOMContentLoaded', () => {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        entry.target.style.transitionDelay = `${entry.target.dataset.index * 0.1}s`;
+                    } else {
+                        entry.target.classList.remove('visible');
+                        entry.target.style.transitionDelay = '0s';
+                    }
+                });
+            }, {
+                root: null,
+                threshold: 0.1,
+                rootMargin: '0px'
+            });
+
+            // Añadir índices para el delay
+            timelineItems.forEach((item, index) => {
+                item.dataset.index = index;
+                observer.observe(item);
+            });
+
+            // Mejorar la interactividad al hover
+            timelineItems.forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    timelineItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.style.opacity = '0.5';
+                        }
+                    });
+                });
+
+                item.addEventListener('mouseleave', () => {
+                    timelineItems.forEach(otherItem => {
+                        otherItem.style.opacity = '1';
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
