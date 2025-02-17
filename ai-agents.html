@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Agents - Nahuel Albornoz</title>
     <link href="https://fonts.googleapis.com/css?family=Barlow:400,500,700|Playfair+Display" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -164,13 +165,25 @@
         }
 
         .message {
-            max-width: 80%;
+            max-width: 85%;
             padding: 1rem 1.5rem;
             border-radius: 15px;
             color: #FFFFFF;
             font-family: 'Barlow', sans-serif;
-            line-height: 1.5;
+            line-height: 1.6;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            animation: messageAppear 0.3s ease-out;
+        }
+
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .user-message {
@@ -184,6 +197,21 @@
             align-self: flex-start;
             border-bottom-left-radius: 5px;
             border: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.95rem;
+        }
+
+        .bot-message code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .bot-message pre {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
         }
 
         .chat-input-container {
@@ -239,6 +267,53 @@
         .chart-container img {
             max-width: 100%;
             border-radius: 5px;
+        }
+
+        /* Estilos para las tablas Markdown */
+        .bot-message table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .bot-message th,
+        .bot-message td {
+            padding: 0.8rem;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .bot-message th {
+            background: rgba(63, 81, 255, 0.2);
+            font-weight: 600;
+        }
+
+        .bot-message tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Actualizar estilos para los gráficos */
+        .bot-message img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1.5rem auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: white;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        /* Contenedor específico para gráficos */
+        .chart-wrapper {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
         }
     </style>
 </head>
@@ -306,6 +381,14 @@
         const chatForm = document.getElementById('chatForm');
         const userInput = document.getElementById('userInput');
 
+        // Configurar marked.js
+        marked.setOptions({
+            breaks: true,
+            gfm: true,
+            tables: true,
+            smartLists: true
+        });
+
         // Mensaje inicial del bot
         addMessage('¡Hola! Puedo ayudarte a explorar y visualizar datos. ¿Te gustaría ver las dimensiones disponibles?', 'bot');
 
@@ -315,7 +398,6 @@
             const message = userInput.value.trim();
             if (!message) return;
 
-            // Agregar mensaje del usuario
             addMessage(message, 'user');
             userInput.value = '';
 
@@ -323,8 +405,7 @@
                 const response = await fetch('https://n8ndigi.pymeinside.com/webhook/abbf2946-38a2-45a6-a1c4-649cf8bae9cd', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': '*/*'
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         query: message,
@@ -337,18 +418,16 @@
                 }
 
                 const data = await response.json();
-                console.log('Respuesta:', data);
                 
                 if (Array.isArray(data) && data[0] && data[0].output) {
                     addMessage(data[0].output, 'bot');
                 } else {
-                    console.error('Formato inesperado:', data);
-                    addMessage('Lo siento, recibí una respuesta en un formato inesperado.', 'bot');
+                    throw new Error('Formato de respuesta inválido');
                 }
                 
             } catch (error) {
                 console.error('Error:', error);
-                addMessage('Lo siento, ha ocurrido un error al procesar tu consulta.', 'bot');
+                addMessage('❌ Lo siento, ha ocurrido un error al procesar tu consulta.', 'bot');
             }
         });
 
@@ -356,13 +435,45 @@
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${type}-message`;
             
-            // Sanitizar y formatear el contenido
-            const sanitizedContent = content
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/\n/g, '<br>');
-                
-            messageDiv.innerHTML = sanitizedContent;
+            if (type === 'bot') {
+                try {
+                    // Procesar el contenido Markdown
+                    let htmlContent = marked.parse(content);
+                    
+                    // Envolver las imágenes en un contenedor
+                    htmlContent = htmlContent.replace(
+                        /<img([^>]*)>/g, 
+                        '<div class="chart-wrapper"><img$1 loading="lazy" crossorigin="anonymous"></div>'
+                    );
+                    
+                    messageDiv.innerHTML = htmlContent;
+
+                    // Manejar las imágenes después del renderizado
+                    messageDiv.querySelectorAll('img').forEach(img => {
+                        // Mostrar spinner o placeholder mientras carga
+                        img.style.opacity = '0';
+                        img.style.transition = 'opacity 0.3s ease';
+                        
+                        img.onerror = () => {
+                            console.error('Error loading image:', img.src);
+                            img.parentElement.innerHTML = `
+                                <div style="color: #ff4444; padding: 1rem;">
+                                    ❌ Error al cargar el gráfico
+                                </div>
+                            `;
+                        };
+                        
+                        img.onload = () => {
+                            img.style.opacity = '1';
+                        };
+                    });
+                } catch (error) {
+                    console.error('Error parsing markdown:', error);
+                    messageDiv.textContent = content;
+                }
+            } else {
+                messageDiv.textContent = content;
+            }
             
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
